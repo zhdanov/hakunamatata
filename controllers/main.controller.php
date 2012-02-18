@@ -4,7 +4,7 @@ namespace Hakunamatata;
 require_once(__DIR__ . '/../classes/Autoload.class.php');
 spl_autoload_register(__NAMESPACE__ . '\Autoload::load');
 
-$request = new Request();
+$request = RequestFactory::getInstance();
 
 if(!$request->uri(0)) {
   $index = new IndexController();

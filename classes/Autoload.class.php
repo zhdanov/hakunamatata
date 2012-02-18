@@ -6,11 +6,14 @@ class Autoload {
 
     $file_class      = __DIR__ . '/' . $file_name . '.class.php';
     $file_controller = __DIR__ . '/../controllers/' . $file_name . '.class.php';
+    $file_factory = __DIR__ . '/../factories/' . $file_name . '.class.php';
 
     if(file_exists($file_class)) {
       require_once($file_class);
     } else if(file_exists($file_controller)) {
       require_once($file_controller);
+    } else if(file_exists($file_factory)) {
+      require_once($file_factory);
     }
   }
 }
