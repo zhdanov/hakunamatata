@@ -1,0 +1,1 @@
+@media (min-width:1025px){.example{text-align:center}}@media (max-width:1024px){.example{color:red}}@media (min-width:451px) and (max-width:1024px){.example{text-align:right}}@media (max-width:450px){.example{text-align:left}}

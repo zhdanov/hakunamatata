@@ -2,11 +2,51 @@
   "name": "hakunamatata",
   "version": "0.0.1",
   "devDependencies": {
-    "cz-conventional-changelog": "^3.2.0"
+    "cz-conventional-changelog": "^3.2.0",
+    "@babel/core": "latest",
+    "@babel/plugin-proposal-class-properties": "latest",
+    "@babel/preset-env": "latest",
+    "autoprefixer": "latest",
+    "cssnano": "latest",
+    "grunt": "latest",
+    "grunt-babel": "latest",
+    "grunt-concat-css": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-postcss": "latest",
+    "stylelint": "latest",
+    "stylelint-config-standard": "latest",
+    "grunt-stylelint": "latest",
+    "postcss-easings": "latest",
+    "postcss-flexbugs-fixes": "latest",
+    "postcss-import": "latest",
+    "postcss-simple-vars": "latest"
   },
+  "license": "MIT",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "browserslist": [
+    "Android > 1",
+    "Baidu > 1",
+    "BlackBerry > 1",
+    "Chrome > 1",
+    "ChromeAndroid > 1",
+    "Edge > 1",
+    "Explorer > 1",
+    "ExplorerMobile > 1",
+    "Firefox > 1",
+    "FirefoxAndroid > 1",
+    "iOS > 1",
+    "Opera > 1",
+    "OperaMini > 1",
+    "OperaMobile > 1",
+    "QQAndroid > 1",
+    "Safari > 1",
+    "Samsung > 1",
+    "UCAndroid > 1",
+    "kaios > 1"
+  ]
 }

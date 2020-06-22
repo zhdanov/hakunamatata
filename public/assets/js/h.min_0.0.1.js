@@ -1,0 +1,1 @@
+"use strict";!function(t){t.getList=function(){return t.itemList}}((window.H=window.H||{},H.example=H.example||{})),function(n){n.itemList=[],n.addItem=function(t){var i,e;n.itemList.push(t+"-"+(e=10,(i=0)+Math.floor((e-i)*Math.random())))}}((window.H=window.H||{},H.example=H.example||{}));
