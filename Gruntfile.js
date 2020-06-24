@@ -152,6 +152,49 @@ module.exports = function (grunt) {
 
   });
 
+  grunt.registerTask('render_html', 'Render HTML', function() {
+    var fs = require('fs');
+    var path = require('path')
+    var bemxjst = require('bem-xjst');
+    var bemhtml = bemxjst.bemhtml;
+
+    var frontendDir = __dirname + '/frontend';
+    var htmlDirName = '/html-rendered/';
+
+    var layerList = [
+      '_base',
+      'desktop',
+      'mobile',
+      'mobile_landscape',
+      'mobile_portrait'
+    ];
+
+    layerList.forEach(layer => {
+      fs.readdirSync(frontendDir + '/' + layer).map(function (dir) {
+        var filePathLayerDir = frontendDir + '/' + layer + '/' + dir;
+        fs.readdirSync(filePathLayerDir).map(function (file) {
+          var filePath = filePathLayerDir + '/' + file;
+
+          if (path.parse(filePath).ext == '.bemjson') {
+            var fileName = path.parse(filePath).name;
+            var bemjson = JSON.parse(fs.readFileSync(filePath).toString());
+            var template = fs.readFileSync(filePathLayerDir + '/' + fileName + '.bemhtml').toString();
+            var html = bemhtml.compile(template).apply(bemjson);
+            var filePathHtml = filePathLayerDir + '/' + htmlDirName + '/' + fileName + '.html';
+
+            if (!fs.existsSync(filePathLayerDir + '/' + htmlDirName)){
+              fs.mkdirSync(filePathLayerDir + '/' + htmlDirName);
+            }
+
+            fs.writeFileSync(filePathHtml, html);
+          }
+
+        });
+      });
+    });
+
+  });
+
   grunt.registerTask('default', ['stylelint', 'babel', 'uglify', 'concat_css', 'postcss']);
   grunt.registerTask('watch_css', ['stylelint', 'concat_css', 'postcss']);
   grunt.registerTask('watch_js', ['babel', 'uglify']);

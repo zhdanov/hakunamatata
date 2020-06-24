@@ -20,7 +20,8 @@
     "postcss-easings": "latest",
     "postcss-flexbugs-fixes": "latest",
     "postcss-import": "latest",
-    "postcss-simple-vars": "latest"
+    "postcss-simple-vars": "latest",
+    "bem-xjst": "latest"
   },
   "license": "MIT",
   "config": {
