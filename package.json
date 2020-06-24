@@ -1,27 +1,27 @@
 {
   "name": "hakunamatata",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "devDependencies": {
-    "cz-conventional-changelog": "^3.2.0",
     "@babel/core": "latest",
     "@babel/plugin-proposal-class-properties": "latest",
     "@babel/preset-env": "latest",
-    "autoprefixer": "latest",
+    "autoprefixer": "^9.8.4",
+    "bem-xjst": "latest",
     "cssnano": "latest",
+    "cz-conventional-changelog": "^3.2.0",
     "grunt": "latest",
     "grunt-babel": "latest",
     "grunt-concat-css": "latest",
     "grunt-contrib-uglify": "latest",
     "grunt-contrib-watch": "latest",
     "grunt-postcss": "latest",
-    "stylelint": "latest",
-    "stylelint-config-standard": "latest",
     "grunt-stylelint": "latest",
     "postcss-easings": "latest",
     "postcss-flexbugs-fixes": "latest",
     "postcss-import": "latest",
     "postcss-simple-vars": "latest",
-    "bem-xjst": "latest"
+    "stylelint": "latest",
+    "stylelint-config-standard": "latest"
   },
   "license": "MIT",
   "config": {
