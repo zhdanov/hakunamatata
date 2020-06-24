@@ -13,18 +13,31 @@ module.exports = function (grunt) {
     watch: {
       css: {
         files: [
-            'frontend/_base/**/*.*',
-            'frontend/desktop/**/*.*',
-            'frontend/mobile/**/*.*',
-            'frontend/mobile_landscape/**/*.*',
-            'frontend/mobile_portrait/**/*.*',
+            'frontend/_base/**/*.css',
+            'frontend/desktop/**/*.css',
+            'frontend/mobile/**/*.css',
+            'frontend/mobile_landscape/**/*.css',
+            'frontend/mobile_portrait/**/*.css',
             'frontend/main.css',
         ],
-        tasks: ['watch_postcss'],
+        tasks: ['watch_css'],
         options: {
           event: ['changed', 'added', 'deleted']
         },
       },
+      js: {
+        files: [
+            'frontend/_base/**/*.js',
+            'frontend/desktop/**/*.js',
+            'frontend/mobile/**/*.js',
+            'frontend/mobile_landscape/**/*.js',
+            'frontend/mobile_portrait/**/*.js'
+        ],
+        tasks: ['watch_js'],
+        options: {
+          event: ['changed', 'added', 'deleted']
+        },
+      }
     },
 
     babel: {
@@ -139,7 +152,8 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('default', ['babel', 'stylelint', 'uglify', 'concat_css', 'postcss']);
-  grunt.registerTask('watch_postcss', ['stylelint', 'concat_css', 'postcss', 'babel', 'uglify']);
+  grunt.registerTask('default', ['stylelint', 'babel', 'uglify', 'concat_css', 'postcss']);
+  grunt.registerTask('watch_css', ['stylelint', 'concat_css', 'postcss']);
+  grunt.registerTask('watch_js', ['babel', 'uglify']);
 
 };
