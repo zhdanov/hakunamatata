@@ -195,7 +195,7 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('default', ['stylelint', 'babel', 'uglify', 'concat_css', 'postcss']);
+  grunt.registerTask('default', ['stylelint', 'babel', 'uglify', 'concat_css', 'postcss', 'render_html']);
   grunt.registerTask('watch_css', ['stylelint', 'concat_css', 'postcss']);
   grunt.registerTask('watch_js', ['babel', 'uglify']);
 
