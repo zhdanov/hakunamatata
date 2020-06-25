@@ -13,11 +13,11 @@ module.exports = function (grunt) {
     watch: {
       css: {
         files: [
-            'frontend/_base/**/*.css',
-            'frontend/desktop/**/*.css',
-            'frontend/mobile/**/*.css',
-            'frontend/mobile_landscape/**/*.css',
-            'frontend/mobile_portrait/**/*.css',
+            'frontend/_base/**/css/*.css',
+            'frontend/desktop/**/css/*.css',
+            'frontend/mobile/**/css/*.css',
+            'frontend/mobile_landscape/**/css/*.css',
+            'frontend/mobile_portrait/**/css/*.css',
             'frontend/main.css',
         ],
         tasks: ['watch_css'],
@@ -27,11 +27,11 @@ module.exports = function (grunt) {
       },
       js: {
         files: [
-            'frontend/_base/**/*.js',
-            'frontend/desktop/**/*.js',
-            'frontend/mobile/**/*.js',
-            'frontend/mobile_landscape/**/*.js',
-            'frontend/mobile_portrait/**/*.js'
+            'frontend/_base/**/js/*.js',
+            'frontend/desktop/**/js/*.js',
+            'frontend/mobile/**/js/*.js',
+            'frontend/mobile_landscape/**/js/*.js',
+            'frontend/mobile_portrait/**/js/*.js'
         ],
         tasks: ['watch_js'],
         options: {
@@ -159,7 +159,7 @@ module.exports = function (grunt) {
     var bemhtml = bemxjst.bemhtml;
 
     var frontendDir = __dirname + '/frontend';
-    var htmlDirName = '/html-rendered/';
+    var htmlDirName = 'html';
 
     var layerList = [
       '_base',
@@ -172,13 +172,18 @@ module.exports = function (grunt) {
     layerList.forEach(layer => {
       fs.readdirSync(frontendDir + '/' + layer).map(function (dir) {
         var filePathLayerDir = frontendDir + '/' + layer + '/' + dir;
-        fs.readdirSync(filePathLayerDir).map(function (file) {
-          var filePath = filePathLayerDir + '/' + file;
+
+        if (!fs.existsSync(filePathLayerDir + '/' + htmlDirName)){
+          return null;
+        }
+
+        fs.readdirSync(filePathLayerDir + '/' + htmlDirName).map(function (file) {
+          var filePath = filePathLayerDir + '/' + htmlDirName + '/' + file;
 
           if (path.parse(filePath).ext == '.bemjson') {
             var fileName = path.parse(filePath).name;
             var bemjson = JSON.parse(fs.readFileSync(filePath).toString());
-            var template = fs.readFileSync(filePathLayerDir + '/' + fileName + '.bemhtml').toString();
+            var template = fs.readFileSync(filePathLayerDir + '/' + htmlDirName + '/' + fileName + '.bemhtml').toString();
             var html = bemhtml.compile(template).apply(bemjson);
             var filePathHtml = filePathLayerDir + '/' + htmlDirName + '/' + fileName + '.html';
 
