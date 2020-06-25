@@ -158,6 +158,8 @@ module.exports = function (grunt) {
     var bemxjst = require('bem-xjst');
     var bemhtml = bemxjst.bemhtml;
 
+    var pkg = JSON.parse(fs.readFileSync(__dirname + '/package.json').toString());
+
     var frontendDir = __dirname + '/frontend';
     var htmlDirName = 'html';
 
@@ -169,6 +171,7 @@ module.exports = function (grunt) {
       'mobile_portrait'
     ];
 
+    // blocks
     layerList.forEach(layer => {
       fs.readdirSync(frontendDir + '/' + layer).map(function (dir) {
         var filePathLayerDir = frontendDir + '/' + layer + '/' + dir;
@@ -197,6 +200,13 @@ module.exports = function (grunt) {
         });
       });
     });
+
+    // showcase
+    var bemjson = JSON.parse(fs.readFileSync(__dirname + '/public/index.bemjson').toString());
+    bemjson.version = pkg.version;
+    var template = fs.readFileSync(__dirname + '/public/index.bemhtml').toString();
+    var html = bemhtml.compile(template).apply(bemjson);
+    fs.writeFileSync(__dirname + '/public/index.html', html);
 
   });
 

@@ -1,0 +1,83 @@
+block('page')(
+
+  mode('doctype')(function() {
+    return { html : this.ctx.doctype || '<!DOCTYPE html>' };
+  }),
+
+  wrap()(function() {
+    var ctx = this.ctx;
+
+    ctx.head.forEach(function(el){
+      el.url = el.url.replace(/%version%/g, ctx.version);
+    });
+
+    return [
+      apply('doctype'),
+      {
+        tag : 'html',
+        content : [
+          {
+            elem : 'head',
+            content : [
+              { tag : 'meta', attrs : { charset : 'utf-8' } },
+              { tag : 'meta', attrs : { name : 'viewport', content: "user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" } },
+              { tag : 'title', content : ctx.title },
+              ctx.head,
+              ctx.favicon? { elem : 'favicon', url : ctx.favicon } : ''
+            ]
+          },
+          ctx
+        ]
+      }
+    ];
+  }),
+
+  tag()('body'),
+
+  content()(function() {
+    return [
+      applyNext(),
+      this.ctx.scripts
+    ];
+  }),
+
+  elem('head')(
+    bem()(false),
+    tag()('head')
+  ),
+
+  elem('meta')(
+    bem()(false),
+    tag()('meta')
+  ),
+
+  elem('css')(
+    bem()(false),
+    tag()('link'),
+    attrs()(function(node, ctx) {
+      return {
+        rel: "stylesheet",
+        href: ctx.url
+      };
+    })
+  ),
+
+  elem('js')(
+    bem()(false),
+    tag()('script'),
+    attrs()(function(node, ctx) {
+      return {
+        src: ctx.url
+      };
+    })
+  ),
+
+  elem('favicon')(
+    bem()(false),
+    tag()('link'),
+    attrs()(function() {
+      return this.extend(applyNext() || {}, { rel : 'shortcut icon', href : this.ctx.url });
+    })
+  )
+
+);
