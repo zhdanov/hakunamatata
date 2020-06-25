@@ -1,14 +1,29 @@
 {
   "name": "hakunamatata",
+  "description": "Component explorer",
   "version": "0.0.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhdanov/hakunamatata.git"
+  },
+  "keywords": [
+    "bem",
+    "bem-xjst",
+    "autodocs",
+    "autotests",
+    "library",
+    "showcase"
+  ],
+  "author": "Yuriy Zhdanov <yuriy.zhdanov@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "latest",
     "@babel/plugin-proposal-class-properties": "latest",
     "@babel/preset-env": "latest",
-    "autoprefixer": "^9.8.4",
+    "autoprefixer": "latest",
     "bem-xjst": "latest",
     "cssnano": "latest",
-    "cz-conventional-changelog": "^3.2.0",
+    "cz-conventional-changelog": "latest",
     "grunt": "latest",
     "grunt-babel": "latest",
     "grunt-concat-css": "latest",
@@ -23,7 +38,6 @@
     "stylelint": "latest",
     "stylelint-config-standard": "latest"
   },
-  "license": "MIT",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
