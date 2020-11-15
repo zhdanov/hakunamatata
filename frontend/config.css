@@ -2,3 +2,6 @@ $desktopWithMin:          1025px;
 $mobileLandscapeMinWidth: 451px;
 $mobileLandscapeMaxWidth: 1024px;
 $mobilePortraitMaxWidth:  450px;
+
+
+$theme_size_text-base: 16px;

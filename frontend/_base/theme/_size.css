@@ -1,0 +1,18 @@
+$theme_size_text-xs: 0.7em;
+$theme_size_text-s: 0.8em;
+$theme_size_text-m: 1em;
+$theme_size_text-l: 1.125em;
+$theme_size_text-xl: 1.25em;
+$theme_size_text-2xl: 1.5em;
+$theme_size_text-3xl: 2em;
+$theme_size_text-4xl: 3em;
+$theme_size_text-5xl: 4.5em;
+$theme_size_text-6xl: 6em;
+
+.theme_size_text-xs {
+  font-size: $theme_size_text-xs;
+}
+
+.theme_size_text-s {
+  font-size: $theme_size_text-s;
+}
