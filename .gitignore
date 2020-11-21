@@ -2,3 +2,5 @@ cache/
 node_modules/
 blocks_babel/
 build/
+
+daemons/xjst-server/node_modules/
