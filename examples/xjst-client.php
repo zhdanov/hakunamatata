@@ -20,12 +20,12 @@ if ($result === false) {
 $data = [
     'block' => 'topbar',
     'content' => [
-        '/cdn/img/s/logo.png',
-        [
+        'logo' => '/cdn/img/s/logo.png',
+        'menu' => [
           ['Menu item 1', "/catalog"],
           ['Menu item 2', "/about"],
         ],
-        [
+        'links' => [
           ['Link item 1', '/archive'],
           ['Link item 2', '/telegram-link'],
         ]
