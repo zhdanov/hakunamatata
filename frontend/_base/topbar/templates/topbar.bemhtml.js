@@ -1,15 +1,9 @@
-block('logo')(
-  tag()('img')
+block('topbar')(
+  elem('logo').tag()('img'),
 )
 
 block('menu')(
-  tag()('ul')
-)
-
-block('menu-item')(
-  tag()('li')
-)
-
-block('link')(
-  tag()('a')
+  tag()('ul'),
+  elem('item').tag()('li'),
+  elem('link').tag()('a')
 )

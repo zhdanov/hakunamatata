@@ -7,8 +7,7 @@
 
       // begin logo
       const logo = {
-        block: 'logo',
-        mix: {block: 'topbar', elem: 'logo'},
+        elem: 'logo',
         attrs: {
           'src': paramLogo
         }
@@ -27,15 +26,13 @@
         const src = i[1];
 
         const link = {
-          block: 'link',
-          mix: {block: 'menu', elem: 'link'},
+          elem: 'link',
           attrs: {src: src},
           content: title
         }
 
         menu.content.push({
-          block: 'menu-item',
-          mix: {block: 'menu', elem: 'item'},
+          elem: 'item',
           content: link
         }); 
       });
@@ -53,15 +50,13 @@
         const src = i[1];
 
         const link = {
-          block: 'link',
-          mix: {block: 'menu', elem: 'link'},
+          elem: 'link',
           attrs: {src: src},
           content: title
         }
 
         links.content.push({
-          block: 'menu-item',
-          mix: {block: 'menu', elem: 'item'},
+          elem: 'item',
           content: link
         }); 
       });
