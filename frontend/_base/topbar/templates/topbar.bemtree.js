@@ -1,9 +1,9 @@
 () => {
   block('topbar')({
     content: (node, ctx) => {
-      const paramLogo = ctx.content[0];
-      const paramMenu = ctx.content[1];
-      const paramLinks = ctx.content[2];
+      const paramLogo = ctx.content.logo;
+      const paramMenu = ctx.content.menu;
+      const paramLinks = ctx.content.links;
 
       // begin logo
       const logo = {
