@@ -1,0 +1,28 @@
+#  werf.yaml
+#  ---
+#  image: {{ env "appname" }}-wait-http-200
+#  from: alpine:3.13.0
+#  ansible:
+#    beforeInstall:
+#    - name: install packages
+#      shell: |
+#        apk add --no-cache curl
+{{- define "h-init-container-wait-http-200" }}
+  {{- $ := index . 0 }}
+  {{- $url := index . 2 }}
+  {{- with index . 1 }}
+
+
+- name: wait-http-200
+  {{ tuple (printf "%s-%s" .Chart.Name "wait-http-200") . | werf_container_image }}
+  command:
+    - "sh"
+    - "-c"
+    - >
+      while [[ "$(curl -s -o /dev/null -w '%{http_code}' {{ print $url }})" != "200" ]];
+      do echo waiting for {{ print $url }};
+      sleep 2;
+      done
+
+
+{{- end }} {{- end }}
