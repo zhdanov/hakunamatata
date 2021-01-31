@@ -8,17 +8,14 @@
 #      shell: |
 #        apk add --no-cache curl
 #
-#  usage:
-#  {{- $gitlabUrl := "http://gitlab-prod.gitlab-prod/users/sign_in" }}
-#  {{- include "h-init-container-wait-http-200" (list $ . $gitlabUrl) | indent 6 }}
 #
-{{- define "h-init-container-wait-http-200" }}
+{{- define "h-init-container-wait-http-200" -}}
   {{- $ := index . 0 }}
   {{- $url := index . 2 }}
   {{- with index . 1 }}
 
 
-- name: wait-http-200
+- name: wait-http-200-{{ print $url | sha256sum | trunc 5 }}
   {{ tuple (printf "%s-%s" .Chart.Name "wait-http-200") . | werf_container_image }}
   command:
     - "sh"
@@ -30,4 +27,4 @@
       done
 
 
-{{- end }} {{- end }}
+{{- end -}} {{- end -}}
