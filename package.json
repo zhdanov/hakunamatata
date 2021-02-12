@@ -1,7 +1,7 @@
 {
   "name": "hakunamatata",
   "description": "Component explorer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/zhdanov/hakunamatata.git"
@@ -33,10 +33,12 @@
     "@babel/cli": "^7.12.13",
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
+    "beautify": "0.0.8",
+    "html-minifier": "^4.0.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
-    "uglifyjs-folder": "^2.0.0",
-    "beautify": "0.0.8",
-    "html-minifier": "^4.0.0"
+    "uglifyjs-folder": "^2.0.0"
   }
 }
