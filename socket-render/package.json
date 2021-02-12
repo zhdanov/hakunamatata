@@ -1,0 +1,21 @@
+{
+  "name": "socket-render",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhdanov/hakunamatata.git"
+  },
+  "description": "Service for rendiring hakunamatata blocks",
+  "main": "socket-render.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yuriy Zhdanov <yuriy.zhdanov@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "beautify": "0.0.8",
+    "html-minifier": "^4.0.0",
+    "js-yaml": "^4.0.0",
+    "mustache": "^4.1.0"
+  }
+}

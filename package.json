@@ -1,67 +1,42 @@
 {
   "name": "hakunamatata",
   "description": "Component explorer",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/zhdanov/hakunamatata.git"
   },
   "keywords": [
     "bem",
-    "bem-xjst",
+    "mustache",
     "autodocs",
     "autotests",
     "library",
-    "showcase"
+    "showcase",
+    "component explorer"
   ],
   "author": "Yuriy Zhdanov <yuriy.zhdanov@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "mustache": "^4.1.0"
+  },
+  "scripts": {
+    "clean": "rimraf .babel-blocks",
+    "init-modules": "./build/build.bash",
+    "babel": "npx babel --out-dir .babel-blocks hakunamatata.js common.blocks common.bundles",
+    "uglify": "npx uglifyjs-folder .babel-blocks -o h.min.js",
+    "build:js": "run-s clean && run-s babel && run-s init-modules && run-s uglify",
+    "build": "run-s build:*",
+    "test": "node tests/tests.js"
+  },
   "devDependencies": {
-    "@babel/core": "latest",
-    "@babel/plugin-proposal-class-properties": "latest",
-    "@babel/preset-env": "latest",
-    "autoprefixer": "latest",
-    "bem-xjst": "latest",
-    "cssnano": "latest",
-    "cz-conventional-changelog": "latest",
-    "grunt": "latest",
-    "grunt-babel": "latest",
-    "grunt-concat-css": "latest",
-    "grunt-contrib-uglify": "latest",
-    "grunt-contrib-watch": "latest",
-    "grunt-postcss": "latest",
-    "grunt-stylelint": "latest",
-    "postcss-easings": "latest",
-    "postcss-flexbugs-fixes": "latest",
-    "postcss-import": "latest",
-    "postcss-simple-vars": "latest",
-    "stylelint": "latest",
-    "stylelint-config-standard": "latest"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "browserslist": [
-    "Android > 1",
-    "Baidu > 1",
-    "BlackBerry > 1",
-    "Chrome > 1",
-    "ChromeAndroid > 1",
-    "Edge > 1",
-    "Explorer > 1",
-    "ExplorerMobile > 1",
-    "Firefox > 1",
-    "FirefoxAndroid > 1",
-    "iOS > 1",
-    "Opera > 1",
-    "OperaMini > 1",
-    "OperaMobile > 1",
-    "QQAndroid > 1",
-    "Safari > 1",
-    "Samsung > 1",
-    "UCAndroid > 1",
-    "kaios > 1"
-  ]
+    "@babel/cli": "^7.12.13",
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "uglifyjs-folder": "^2.0.0",
+    "beautify": "0.0.8",
+    "html-minifier": "^4.0.0"
+  }
 }
