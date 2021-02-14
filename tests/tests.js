@@ -33,7 +33,7 @@ const pageParams = {
   ]
 };
 
-let html = h.block['guide-list'].render(pageParams);
+let html = h.bundle['guide-list'].render(pageParams);
 html = beautify(minify.minify(html, {collapseWhitespace: true}), {format: 'html'});
 
 console.log(html);

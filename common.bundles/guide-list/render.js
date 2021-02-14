@@ -1,4 +1,4 @@
-h.block['guide-list'].render = function (params) {
+h.bundle['guide-list'].render = function (params) {
 
   params.topbar.mix = 'guide-list__topbar';
 
