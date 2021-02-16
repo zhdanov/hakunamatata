@@ -21,15 +21,20 @@ h.test.success = function (text) {
   console.log("\x1b[32m", path.basename(text).split('.').slice(0, -1).join('.'), "\x1b[0m");
 };
 
-h.test.error = function (filepath, desc = null, params = null) {
+h.test.error = function (filepath, desc = null) {
 
   console.log("\x1b[31m", path.basename(filepath).split('.').slice(0, -1).join('.') + (desc?' ('+desc+')':''), "\x1b[0m");
 
-  if (params.type && params.type === 'diff-html' && params.html1 && params.html2) {
-    console.log(getDiffHtml(params.html1, params.html2));
+  process.exit();
+};
+
+h.test.html = function (filepath, html1, html2) {
+  if (html1 !== html2) {
+    console.log(getDiffHtml(html1, html2));
+    h.test.error(filepath);
   }
 
-  process.exit();
+  h.test.success(filepath);
 };
 
 var layerList = [
