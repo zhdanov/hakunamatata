@@ -1,14 +1,10 @@
 const fs = require('fs');
-
-var layerList = [
-  'common.blocks',
-  'common.bundles'
-];
+const getLayerList = require('./build__get-layer-list.js');
 
 const blockList = {};
 const bundleList = {};
 
-layerList.forEach(layer => {
+getLayerList().forEach(layer => {
   fs.readdirSync(__dirname + '/../' + layer).map(function (dir) {
     var filePathLayerDir = __dirname + '/../' + layer + '/' + dir;
 

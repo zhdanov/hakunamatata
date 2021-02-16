@@ -4,6 +4,7 @@ const minify = require('html-minifier');
 const beautify = require('beautify');
 const path = require("path");
 const getDiffHtml = require('./test__get-diff-html.js');
+const getLayerList = require('./../build/build__get-layer-list.js');
 
 var jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -37,14 +38,9 @@ h.test.html = function (filepath, html1, html2) {
   h.test.success(filepath);
 };
 
-var layerList = [
-  'common.blocks',
-  'common.bundles'
-];
-
-layerList.forEach(layer => {
+getLayerList().forEach(layer => {
   fs.readdirSync(__dirname + '/../' + layer).map(function (dir) {
-    var testsPathDir = __dirname + '/../' + layer + '/' + dir + '/test';
+    let testsPathDir = __dirname + '/../' + layer + '/' + dir + '/test';
 
     if (fs.existsSync(testsPathDir)) {
       let files = fs.readdirSync(testsPathDir);
