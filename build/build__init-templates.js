@@ -19,4 +19,4 @@ getLayerList().forEach(layer => {
   });
 });
 
-fs.appendFileSync(__dirname + '/../.babel-blocks/hakunamatata__init-templates.js', 'h.templates = ' + JSON.stringify(templateList) + ";\n");
+fs.appendFileSync(__dirname + '/../.babel-out/hakunamatata__init-templates.js', 'h.templates = ' + JSON.stringify(templateList) + ";\n");

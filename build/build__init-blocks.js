@@ -18,5 +18,6 @@ getLayerList().forEach(layer => {
   });
 });
 
-fs.appendFileSync(__dirname + '/../.babel-blocks/hakunamatata__init-blocks.js', 'h.block = {}; h.block = ' + JSON.stringify(blockList) + ";\n");
-fs.appendFileSync(__dirname + '/../.babel-blocks/hakunamatata__init-blocks.js', 'h.bundle = {}; h.bundle = ' + JSON.stringify(bundleList) + ";\n");
+fs.appendFileSync(__dirname + '/../.babel-out/hakunamatata__init-blocks.js', 'h.block = {}; h.block = ' + JSON.stringify(blockList) + ";\n");
+fs.appendFileSync(__dirname + '/../.babel-out/hakunamatata__init-blocks.js', 'h.bundle = {}; h.bundle = ' + JSON.stringify(bundleList) + ";\n");
+fs.appendFileSync(__dirname + '/../.babel-out/hakunamatata__init-blocks.js', 'window.bem = {};' + "\n");

@@ -9,7 +9,6 @@
       "build",
       "dependencies",
       "h.min.js",
-      "common.bundles/**/test/*.js",
-      "common.blocks/**/test/*.js"
+      ".babel-in/**/**/test/*.js"
   ]
 }

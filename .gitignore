@@ -1,3 +1,5 @@
-.babel-blocks/
+.babel-out/
+.babel-in/
 node_modules/
 daemons/socket-render/node_modules/
+h.min.js

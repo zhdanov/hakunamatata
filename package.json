@@ -21,11 +21,11 @@
     "mustache": "^4.1.0"
   },
   "scripts": {
-    "clean": "rimraf .babel-blocks",
+    "clean": "rimraf .babel-in",
     "init-modules": "./build/build.bash",
-    "babel": "npx babel --out-dir .babel-blocks .",
-    "uglify": "npx uglifyjs-folder .babel-blocks -o h.min.js",
-    "build:js": "run-s clean && run-s babel && run-s init-modules && run-s uglify",
+    "babel": "npx babel --delete-dir-on-start --out-dir .babel-out .babel-in",
+    "uglify": "npx uglifyjs-folder .babel-out -o h.min.js",
+    "build:js": "run-s clean && ./build/build__babel-in.bash && run-s babel && run-s init-modules && run-s uglify",
     "build": "run-s build:*",
     "test": "node test/test.js"
   },
