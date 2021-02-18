@@ -2,11 +2,12 @@ const fs = require('fs');
 const Mustache = require('mustache');
 const minify = require('html-minifier');
 const beautify = require('beautify');
-const path = require("path");
+const path = require('path');
+const exec = require('child_process');
 const getDiffHtml = require('./test__get-diff-html.js');
 const getLayerList = require('./../build/build__get-layer-list.js');
 
-var jsdom = require("jsdom");
+var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const { window } = new JSDOM();
 const { document } = (new JSDOM('')).window;
@@ -14,7 +15,15 @@ global.document = document;
 
 const $ = jQuery = require('jquery')(window);
 
-eval(fs.readFileSync(__dirname + '/../h.min.js').toString().substring(13));
+
+const hmin = __dirname + '/../h.min.js';
+
+if (!fs.existsSync(hmin)) {
+  console.log('building ' + hmin);
+  exec.execSync('npm run build:js');
+}
+
+eval(fs.readFileSync(hmin).toString().substring(13));
 
 h.test = {};
 
