@@ -27,7 +27,8 @@
     "uglify": "npx uglifyjs-folder .babel-out -o h.min.js",
     "build:js": "run-s clean && run-s babel && run-s init-modules && run-s uglify",
     "stylelint": "./build/build__stylelint.bash",
-    "build:css": "npm run stylelint && echo 'success'",
+    "concat-css": "./build/build__concat-css.bash",
+    "build:css": "npm run stylelint && run-s concat-css",
     "build": "run-s build:*",
     "test": "node test/test.js"
   },
@@ -36,6 +37,7 @@
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
     "beautify": "0.0.8",
+    "concat-cli": "^4.0.0",
     "git-diff": "^2.0.6",
     "html-minifier": "^4.0.0",
     "jquery": "^3.5.1",

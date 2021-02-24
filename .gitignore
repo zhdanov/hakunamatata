@@ -1,5 +1,6 @@
 .babel-out/
 .babel-in/
+.concat-css/
 node_modules/
 daemons/socket-render/node_modules/
 h.min.js
