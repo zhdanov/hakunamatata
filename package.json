@@ -26,6 +26,8 @@
     "babel": "./build/build__babel-in.bash && npx babel --delete-dir-on-start --out-dir .babel-out .babel-in",
     "uglify": "npx uglifyjs-folder .babel-out -o h.min.js",
     "build:js": "run-s clean && run-s babel && run-s init-modules && run-s uglify",
+    "stylelint": "./build/build__stylelint.bash",
+    "build:css": "npm run stylelint && echo 'success'",
     "build": "run-s build:*",
     "test": "node test/test.js"
   },
@@ -40,6 +42,8 @@
     "jsdom": "^16.4.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
+    "stylelint": "^13.11.0",
+    "stylelint-config-standard": "^20.0.0",
     "uglifyjs-folder": "^2.0.0"
   }
 }
