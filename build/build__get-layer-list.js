@@ -4,6 +4,10 @@ module.exports = function() {
 
   const list = [
     'common.blocks',
+    'desktop.blocks',
+    'mobile.blocks',
+    'mobile-landscape.blocks',
+    'mobile-portrait.blocks',
     'common.bundles'
   ];
 

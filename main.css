@@ -1,4 +1,4 @@
-@import "config.css";
+@import ".concat-css/config.css";
 @import ".concat-css/common.blocks.css";
 @import ".concat-css/desktop.blocks.css" (min-width: $desktopWithMin);
 @import ".concat-css/mobile.blocks.css" (max-width: $mobileLandscapeMaxWidth);
