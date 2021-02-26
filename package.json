@@ -18,7 +18,11 @@
   "author": "Yuriy Zhdanov <yuriy.zhdanov@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mustache": "^4.1.0"
+    "mustache": "^4.1.0",
+    "autoprefixer": "^10.2.4",
+    "postcss": "^8.2.6",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   },
   "scripts": {
     "clean": "rimraf .babel-in",
