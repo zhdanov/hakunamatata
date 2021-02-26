@@ -28,7 +28,7 @@
     "build:js": "run-s clean && run-s babel && run-s init-modules && run-s uglify",
     "stylelint": "./build/build__stylelint.bash",
     "concat-css": "./build/build__concat-css.bash",
-    "postcss": "npx postcss --use postcss-import postcss-simple-vars autoprefixer cssnano -o h.min.css main.css",
+    "postcss": "npx postcss main.css -o h.min.css",
     "build:css": "npm run stylelint && run-s concat-css && run-s postcss",
     "build": "run-s build:*",
     "test": "node test/test.js"
@@ -37,6 +37,7 @@
     "@babel/cli": "^7.12.13",
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
+    "autoprefixer": "^9.8.6",
     "beautify": "0.0.8",
     "concat-cli": "^4.0.0",
     "cssnano": "^4.1.10",
