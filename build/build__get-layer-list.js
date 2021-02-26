@@ -12,10 +12,10 @@ module.exports = function() {
   ];
 
   list.forEach(layer => {
-    let layerPathDir = __dirname + '/../../frontend/' + layer;
+    let layerPathDir = __dirname + '/../../' + layer;
 
     if (fs.existsSync(layerPathDir)) {
-      list.push('../frontend/' + layer);
+      list.push('../' + layer);
     }
 
   });

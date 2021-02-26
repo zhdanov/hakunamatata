@@ -31,8 +31,8 @@
     "postcss": "npx postcss main.css -o h.min.css",
     "build:css": "npm run stylelint && run-s concat-css && run-s postcss",
     "build": "run-s build:*",
-    "watch:css": "onchange -v '../frontend/**/*.css' '*.blocks/**/*.css' '*.bundles/**/*.css' -- run-s build:css",
-    "watch:js": "onchange -v '../frontend/**/*.js' '*.blocks/**/*.js' '*.bundles/**/*.js' -- run-s build:js",
+    "watch:css": "onchange -v '../*.blocks/**/*.css' '../*.bundles/**/*.css' '*.blocks/**/*.css' '*.bundles/**/*.css' -- run-s build:css",
+    "watch:js": "onchange -v '../*.blocks/**/*.js' '*.bundles/**/*.js' '*.blocks/**/*.js' '*.bundles/**/*.js' -- run-s build:js",
     "watch": "run-p watch:*",
     "test": "node test/test.js"
   },

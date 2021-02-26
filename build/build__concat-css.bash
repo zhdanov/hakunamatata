@@ -22,6 +22,6 @@ pushd "$(dirname "$0")/.."
     concat_css mobile-portrait.blocks
 
     cp config.css $TMP_DIR/
-    [[ -f ../frontend/config.css ]] && cat ../frontend/config.css >> $TMP_DIR/config.css
+    [[ -f ../config.css ]] && cat ../config.css >> $TMP_DIR/config.css
 
 popd
