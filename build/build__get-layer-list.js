@@ -8,7 +8,8 @@ module.exports = function() {
     'mobile.blocks',
     'mobile-landscape.blocks',
     'mobile-portrait.blocks',
-    'common.bundles'
+    'common.bundles',
+    'common.services'
   ];
 
   list.forEach(layer => {
