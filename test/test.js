@@ -9,12 +9,14 @@ const getLayerList = require('./../build/build__get-layer-list.js');
 
 var jsdom = require('jsdom');
 const { JSDOM } = jsdom;
-const { window } = new JSDOM();
-const { document } = (new JSDOM('')).window;
+global.dom = new JSDOM();
+let window = dom.window;
+let { document } = (new JSDOM('')).window;
 global.document = document;
 
 const $ = jQuery = require('jquery')(window);
 
+global.window = window;
 
 const hmin = __dirname + '/../h.min.js';
 
@@ -45,6 +47,22 @@ h.test.html = function (filepath, html1, html2) {
   }
 
   h.test.success(filepath);
+};
+
+h.test.t = function (func, filename, desc=null) {
+  if (func()) {
+    h.test.success(filename);
+  } else {
+    h.test.error(filename, desc);
+  }
+};
+
+h.test.f = function (func, filename, desc=null) {
+  if (!func()) {
+    h.test.success(filename);
+  } else {
+    h.test.error(filename, desc);
+  }
 };
 
 getLayerList().forEach(layer => {
