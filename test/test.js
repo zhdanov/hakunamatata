@@ -49,16 +49,16 @@ h.test.html = function (filepath, html1, html2) {
   h.test.success(filepath);
 };
 
-h.test.t = function (func, filename, desc=null) {
-  if (func()) {
+h.test.t = function (result, filename, desc=null) {
+  if (result === true) {
     h.test.success(filename);
   } else {
     h.test.error(filename, desc);
   }
 };
 
-h.test.f = function (func, filename, desc=null) {
-  if (!func()) {
+h.test.f = function (result, filename, desc=null) {
+  if (result === false) {
     h.test.success(filename);
   } else {
     h.test.error(filename, desc);
