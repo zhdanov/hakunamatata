@@ -1,13 +1,4 @@
-#  werf.yaml
-#  ---
-#  image: {{ env "appname" }}-wait-http-200
-#  from: alpine:3.13.0
-#  ansible:
-#    beforeInstall:
-#    - name: install packages
-#      shell: |
-#        apk add --no-cache curl
-#
+# werf/wait-http-200.yaml
 #
 {{- define "h-init-container-wait-http-200" -}}
   {{- $ := index . 0 }}
