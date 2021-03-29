@@ -1,0 +1,27 @@
+{{- define "h-ingress" }} {{- $ := index . 0 }} {{- with index . 1 }}
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-{{ env "environment" }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: {{ .Chart.Name }}-{{ env "environment" }}.loc
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: {{ .Chart.Name }}-{{ env "environment" }}
+            port:
+              number: 80
+
+
+{{- end }} {{- end }}

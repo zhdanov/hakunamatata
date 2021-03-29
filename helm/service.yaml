@@ -1,0 +1,21 @@
+{{- define "h-service" }} {{- $ := index . 0 }} {{- with index . 1 }}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-{{ env "environment" }}
+  labels:
+    app: {{ .Chart.Name }}-{{ env "environment" }}
+spec:
+  clusterIP: None
+  selector:
+    app: {{ .Chart.Name }}-{{ env "environment" }}
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+
+
+{{- end }} {{- end }}
