@@ -1,0 +1,89 @@
+image: {{ env "appname" }}-php-fpm
+from: php:7.4.13-fpm-alpine3.12
+docker:
+  USER: root
+  WORKDIR: /var/www/{{ env "appname" }}
+  EXPOSE: "9000"
+git:
+- add: /
+  to: /root/{{ env "appname" }}
+  stageDependencies:
+    install:
+      - "**/*"
+    setup:
+      - "**/*"
+ansible:
+  beforeInstall:
+  - name: install packages for php-fpm
+    shell: apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev openssh git colordiff php7-dev npm
+  - name:  install php-extentions
+    shell: |
+      docker-php-ext-configure gd --with-jpeg
+      docker-php-ext-install -j$(nproc) gd zip
+  - name: install php config
+    shell: |
+      cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+  - name: jekyll
+    shell: |
+      apk --no-cache add \
+        zlib-dev \
+        libffi-dev \
+        build-base \
+        libxml2-dev \
+        imagemagick-dev \
+        readline-dev \
+        libxslt-dev \
+        libffi-dev \
+        yaml-dev \
+        zlib-dev \
+        vips-dev \
+        sqlite-dev \
+        cmake
+
+      apk --no-cache add \
+        linux-headers \
+        openjdk8-jre \
+        less \
+        zlib \
+        libxml2 \
+        readline \
+        libxslt \
+        libffi \
+        git \
+        nodejs \
+        tzdata \
+        shadow \
+        bash \
+        su-exec \
+        nodejs-npm \
+        libressl \
+        yarn
+
+      apk --no-cache add libatomic \
+              ncurses-terminfo-base ncurses-terminfo \
+              libxslt libxslt-dev zlib-dev zlib \
+              ruby ruby-dev yaml yaml-dev \
+              ruby-io-console ruby-irb ruby-json ruby-rake ruby-bigdecimal
+
+      echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+      unset GEM_HOME && unset GEM_BIN && \
+        yes | gem update --system
+      unset GEM_HOME && unset GEM_BIN && yes | gem install --force bundler
+      gem install jekyll
+
+  - name:  ssh_config for gitlab
+    shell: printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+  setup:
+  - name: install npm packages
+    shell: |
+      npm install -g commitizen cz-conventional-changelog cz-customizable
+  - name: configure commitizen
+    shell: |
+      echo '{ "path": "cz-conventional-changelog" }' > /root/.czrc
+  - name: configure ssh
+    shell: |
+      mkdir -p /root/.ssh
+      chmod 700 /root/.ssh
+      echo 'Host *' > /root/.ssh/config
+      echo '    StrictHostKeyChecking no' >> /root/.ssh/config
+      chmod 400 /root/.ssh/config
