@@ -15,7 +15,7 @@ git:
 ansible:
   beforeInstall:
   - name: install packages for php-fpm
-    shell: apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip openssl openssl-dev libzip-dev jpeg-dev libpng-dev openssh git php7-dev colordiff npm
+    shell: apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip openssl openssl-dev libzip-dev jpeg-dev libpng-dev openssh git php7-dev colordiff npm mysql-client
   - name: install php-extentions
     shell: |
       docker-php-ext-configure gd --with-jpeg
