@@ -38,7 +38,8 @@ ansible:
         zlib-dev \
         vips-dev \
         sqlite-dev \
-        cmake
+        cmake \
+        curl-dev
 
       apk --no-cache add \
         linux-headers \
@@ -63,17 +64,18 @@ ansible:
               ncurses-terminfo-base ncurses-terminfo \
               libxslt libxslt-dev zlib-dev zlib \
               ruby ruby-dev yaml yaml-dev \
-              ruby-io-console ruby-irb ruby-json ruby-rake ruby-bigdecimal
-
-      echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-      unset GEM_HOME && unset GEM_BIN && \
-        yes | gem update --system
-      unset GEM_HOME && unset GEM_BIN && yes | gem install --force bundler
-      gem install jekyll
+              ruby-io-console ruby-bundler ruby-irb ruby-json ruby-rake ruby-bigdecimal
 
   - name:  ssh_config for gitlab
     shell: printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
   setup:
+  - name: jekyll
+    shell: |
+      echo 'source "https://rubygems.org"' > /root/Gemfile
+      echo 'gem "jekyll", "~> 4.2"' >> /root/Gemfile
+      echo 'gem "webrick", "~> 1.7"' >> /root/Gemfile
+      echo 'gem "jekyll-admin", group: :jekyll_plugins' >> /root/Gemfile
+      cd /root && bundle install
   - name: install npm packages
     shell: |
       npm install -g commitizen cz-conventional-changelog cz-customizable
