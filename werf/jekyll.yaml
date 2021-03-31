@@ -76,6 +76,7 @@ ansible:
       echo 'gem "webrick", "~> 1.7"' >> /root/Gemfile
       echo 'gem "jekyll-admin", group: :jekyll_plugins' >> /root/Gemfile
       cd /root && bundle install
+      sed -i 's/"host"/"hostAdmin"/g' /usr/lib/ruby/gems/2.7.0/gems/jekyll-admin-0.11.0/lib/jekyll-admin/urlable.rb
   - name: install npm packages
     shell: |
       npm install -g commitizen cz-conventional-changelog cz-customizable
