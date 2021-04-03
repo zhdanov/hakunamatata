@@ -1,9 +1,7 @@
 # helm/init-container-wait-http-200.yaml
 #
-image: {{ env "appname" }}-wait-http-200
+image: h-wait-http-200
 from: alpine:3.13.0
-ansible:
+shell:
   beforeInstall:
-  - name: install packages
-    shell: |
-      apk add --no-cache curl
+  - apk add --no-cache curl

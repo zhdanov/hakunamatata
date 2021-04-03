@@ -1,17 +1,5 @@
-image: {{ env "appname" }}-php-fpm
+image: h-php-fpm
 from: php:7.4.14-fpm-alpine3.13
-docker:
-  USER: root
-  WORKDIR: /var/www/{{ env "appname" }}-backend
-  EXPOSE: "9000"
-git:
-- add: /
-  to: /root/{{ env "appname" }}
-  stageDependencies:
-    install:
-      - "**/*"
-    setup:
-      - "**/*"
 ansible:
   beforeInstall:
   - name: install packages for php-fpm
@@ -30,7 +18,7 @@ ansible:
     shell: |
       cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
   - name:  ssh_config for gitlab
-    shell: printf "Host gitlab-{{ env "environment" }}.gitlab-{{ env "environment" }}.svc.cluster.local\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+    shell: printf "Host gitlab-prod.gitlab-prod.svc.cluster.local\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
   setup:
   - name: install npm packages
     shell: |
