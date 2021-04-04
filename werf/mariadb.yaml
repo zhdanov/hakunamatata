@@ -1,0 +1,2 @@
+image: mariadb
+from: mariadb:10.5.8-focal

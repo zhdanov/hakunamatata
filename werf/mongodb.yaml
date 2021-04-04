@@ -1,0 +1,2 @@
+image: mongodb
+from: mongo:4.4.3-bionic
