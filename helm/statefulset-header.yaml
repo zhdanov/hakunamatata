@@ -1,0 +1,21 @@
+{{- define "h-statefulset-header" }} {{- $ := index . 0 }} {{- with index . 1 }}
+
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}-{{ env "environment" }}
+spec:
+  serviceName: {{ .Chart.Name }}-{{ env "environment" }}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-{{ env "environment" }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-{{ env "environment" }}
+    spec:
+
+
+{{- end }} {{- end }}

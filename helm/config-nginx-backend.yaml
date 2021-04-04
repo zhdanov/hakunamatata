@@ -1,4 +1,4 @@
-{{- define "config-nginx-backend" }} {{- $ := index . 0 }} {{- with index . 1 }}
+{{- define "h-config-nginx-backend" }} {{- $ := index . 0 }} {{- with index . 1 }}
 
 
 nginx.conf: |
