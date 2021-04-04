@@ -1,0 +1,74 @@
+{{- define "config-nginx-backend" }} {{- $ := index . 0 }} {{- with index . 1 }}
+
+
+nginx.conf: |
+  user nginx nginx;
+
+  worker_processes 2;
+
+  pid /var/run/nginx.pid;
+
+  error_log /dev/stderr;
+
+  events {
+    worker_connections 1024;
+  }
+
+  http {
+    fastcgi_buffers 10 240k;
+    fastcgi_buffer_size 2048k;
+    fastcgi_busy_buffers_size 2048k;
+    proxy_buffer_size 128k;
+    proxy_buffers 4 256k;
+    proxy_busy_buffers_size 256k;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    log_format combined_plus escape=json '{"time_local": "$time_local", '
+                                        '"remote_addr": "$remote_addr", '
+                                        '"remote_user": "$remote_user", '
+                                        '"request": "$request", '
+                                        '"status": "$status", '
+                                        '"body_bytes_sent": "$body_bytes_sent", '
+                                        '"request_time": "$request_time", '
+                                        '"http_referrer": "$http_referer", '
+                                        '"http_user_agent": "$http_user_agent"}';
+    access_log /dev/stdout;
+    sendfile on;
+    keepalive_timeout 65;
+    include /etc/nginx/conf.d/*.conf;
+    tcp_nopush on;
+    tcp_nodelay on;
+
+    server {
+      listen 80;
+      server_name {{ .Chart.Name }}-{{ env "environment" }}.loc;
+      client_max_body_size 200m;
+      index index.html index.htm index.php;
+      root /var/www/{{ .Chart.Name }}-backend/public;
+
+      location ~ [^/]\.php(/|$) {
+        fastcgi_split_path_info ^(.+?\.php)(/.*)$;
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        fastcgi_read_timeout 600;
+      }
+
+     location / {
+       try_files $uri $uri/ @php;
+     }
+
+     location @php {
+       fastcgi_pass 127.0.0.1:9000;
+
+       include fastcgi_params;
+       fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+     }
+   }
+  }
+
+
+{{- end }} {{- end }}
