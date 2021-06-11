@@ -15,9 +15,9 @@ nginx.conf: |
   }
 
   http {
-    fastcgi_buffers 10 240k;
-    fastcgi_buffer_size 2048k;
-    fastcgi_busy_buffers_size 2048k;
+    fastcgi_buffers 11 440k;
+    fastcgi_buffer_size 4048k;
+    fastcgi_busy_buffers_size 4048k;
     proxy_buffer_size 128k;
     proxy_buffers 4 256k;
     proxy_busy_buffers_size 256k;
