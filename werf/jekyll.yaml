@@ -61,6 +61,10 @@ shell:
     echo 'gem "jekyll", "~> 4.2"' >> /root/Gemfile
     echo 'gem "webrick", "~> 1.7"' >> /root/Gemfile
     echo 'gem "jekyll-admin", group: :jekyll_plugins' >> /root/Gemfile
+    echo 'gem "jekyll-paginate"' >> /root/Gemfile
+    echo 'gem "jekyll-feed"' >> /root/Gemfile
+    echo 'gem "jekyll-sitemap"' >> /root/Gemfile
+
     cd /root && bundle install
 
     # install npm packages
