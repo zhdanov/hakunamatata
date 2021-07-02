@@ -67,7 +67,7 @@ h.test.f = function (result, filename, desc=null) {
 
 getLayerList().forEach(layer => {
   fs.readdirSync(__dirname + '/../' + layer).map(function (dir) {
-    let testsPathDir = __dirname + '/../' + layer + '/' + dir + '/test';
+    let testsPathDir = __dirname + '/../' + layer + '/' + dir + '/tests';
 
     if (fs.existsSync(testsPathDir)) {
       let files = fs.readdirSync(testsPathDir);
