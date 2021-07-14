@@ -61,9 +61,15 @@ shell:
     echo 'gem "jekyll", "~> 4.2"' >> /root/Gemfile
     echo 'gem "webrick", "~> 1.7"' >> /root/Gemfile
     echo 'gem "jekyll-admin", group: :jekyll_plugins' >> /root/Gemfile
-    echo 'gem "jekyll-paginate"' >> /root/Gemfile
     echo 'gem "jekyll-feed"' >> /root/Gemfile
     echo 'gem "jekyll-sitemap"' >> /root/Gemfile
+    echo 'gem "jekyll-email-protect"' >> /root/Gemfile
+    echo 'gem "jekyll-github-metadata"' >> /root/Gemfile
+    echo 'gem "jekyll-paginate-v2"' >> /root/Gemfile
+    echo 'gem "jekyll-scholar"' >> /root/Gemfile
+    echo 'gem "jekyll-twitter-plugin"' >> /root/Gemfile
+    echo 'gem "jemoji"' >> /root/Gemfile
+    echo 'gem "unicode_utils"' >> /root/Gemfile
 
     cd /root && bundle install
 
