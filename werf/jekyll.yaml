@@ -70,6 +70,8 @@ shell:
     echo 'gem "jekyll-twitter-plugin"' >> /root/Gemfile
     echo 'gem "jemoji"' >> /root/Gemfile
     echo 'gem "unicode_utils"' >> /root/Gemfile
+    echo 'gem "jekyll-seo-tag", "~> 2.0"' >> /root/Gemfile
+    echo 'gem "rake", ">= 12.3.1", "< 13.1.0"' >> /root/Gemfile
 
     cd /root && bundle install
 
