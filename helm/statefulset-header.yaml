@@ -1,6 +1,7 @@
 {{- define "h-statefulset-header" }} {{- $ := index . 0 }} {{- with index . 1 }}
 
 
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
