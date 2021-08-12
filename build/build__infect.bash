@@ -68,6 +68,9 @@ then
             git init
             git remote add origin git@gitlab-prod.gitlab-prod:\$HOME_USER_NAME/$jekyll.git
             git pull origin master
+            git submodule update --init --recursive
+            rm -rf hakunamatata/werf
+            rm -rf hakunamatata/helm
             cp /root/Gemfile .
             bundle install
         popd
@@ -120,5 +123,12 @@ popd
 EOF
 
     chmod +x .helm/postdeploy.bash
+
+    cat << EOF > build/build__hard.bash
+#!/bin/bash
+./hakunamatata/build/build__jekyll-static-hard.bash
+EOF
+
+    chmod +x build/build__hard.bash
 
 fi
