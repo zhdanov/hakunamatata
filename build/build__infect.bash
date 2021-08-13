@@ -44,7 +44,7 @@ cat << EOF > namespace-list.txt
 development
 EOF
 
-# -j --jekyll
+# -j --jekyll begin
 if [ ! -z ${jekyll+x} ]; then
     cat << EOF >> ./.helm/templates/common.yaml
 {{- include "h-jekyll" (list $ .) }}
@@ -54,39 +54,9 @@ EOF
 
     cat << EOF >> build/build__post-start-container.bash
 #!/bin/bash
-
-if nc -z -w2 gitlab-prod.gitlab-prod 80 2>/dev/null
-then
-
-    if [[ ! -d /var/www/$jekyll ]]; then
-        mkdir -p /var/www/$jekyll
-    fi
-
-    if [[ ! -d /var/www/$jekyll/.git ]]; then
-
-        pushd /var/www/$jekyll/
-            git init
-            git remote add origin git@gitlab-prod.gitlab-prod:\$HOME_USER_NAME/$jekyll.git
-            git pull origin master
-            git submodule update --init --recursive
-            rm -rf hakunamatata/werf
-            rm -rf hakunamatata/helm
-            cp /root/Gemfile .
-            bundle install
-        popd
-    fi
-
-fi
-
-echo '0.0.0.0  $jekyll-dev.loc' >> /etc/hosts
-
-if [[ -f /var/www/$jekyll/Gemfile ]]; then
-
-    pushd /var/www/$jekyll/
-        jekyll serve -w -I > /dev/null 2>&1 &
-    popd
-
-fi
+pushd "\$(dirname "\$0")"
+    ./../hakunamatata/build/build__jekyll-post-start-container.bash $jekyll
+popd
 EOF
 
     chmod +x build/build__post-start-container.bash
@@ -103,6 +73,9 @@ EOF
 EOF
 
     cat << EOF >> .gitignore
+*.gem
+.bundle
+.ruby-version
 .jekyll-metadata
 .jekyll-cache
 _site
@@ -112,13 +85,10 @@ EOF
 
     cat << EOF > .helm/postdeploy.bash
 #!/bin/bash
-
 pushd "\$(dirname "\$0")"
-
     ./../hakunamatata/container/container__make-alias.bash $jekyll-dev jekyll
     ./../hakunamatata/container/container__copy-dotfiles.bash $jekyll-dev jekyll
     ./../hakunamatata/container/container__copy-root-ssh-key.bash $jekyll-dev jekyll
-
 popd
 EOF
 
@@ -139,3 +109,4 @@ EOF
     chmod +x build/build__commit.bash
 
 fi
+# -j --jekyll end
