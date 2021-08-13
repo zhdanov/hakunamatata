@@ -131,4 +131,11 @@ EOF
 
     chmod +x build/build__hard.bash
 
+    cat << EOF > build/build__commit.bash
+#!/bin/bash
+./hakunamatata/build/build__jekyll-git-commit-content.bash
+EOF
+
+    chmod +x build/build__commit.bash
+
 fi
