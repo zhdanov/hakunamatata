@@ -8,4 +8,4 @@ This project is a commons library for my projects. Includes:
 Last stable version: [1.0.0](https://github.com/zhdanov/hakunamatata/releases/tag/1.0.0)
 
 ## License
-The home directory is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The hakunamatata is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
