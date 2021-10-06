@@ -13,7 +13,7 @@ then
 
         pushd /var/www/$PROJECT/
             git init
-            git remote add origin git@gitlab-prod.gitlab-prod:\$HOME_USER_NAME/$PROJECT.git
+            git remote add origin git@gitlab-prod.gitlab-prod:$HOME_USER_NAME/$PROJECT.git
             git pull origin master
             git submodule update --init --recursive
             rm -rf hakunamatata/werf
