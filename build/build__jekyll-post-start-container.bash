@@ -25,7 +25,7 @@ then
 
 fi
 
-echo '0.0.0.0  $PROJECT-dev.loc' >> /etc/hosts
+echo "0.0.0.0  $PROJECT-dev.loc" >> /etc/hosts
 
 if [[ -f /var/www/$PROJECT/Gemfile ]]; then
 
