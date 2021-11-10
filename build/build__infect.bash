@@ -3,6 +3,7 @@
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -j|--jekyll) jekyll="$2"; shift ;;
+        -r|--restfull-php) restfullphp="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -13,6 +14,18 @@ if [ ! -z ${jekyll+x} ]; then
         echo "set -j %project_name%"
         exit 1
     fi
+fi
+
+if [ ! -z ${restfullphp+x} ]; then
+    if [ "$restfullphp" == "" ]; then
+        echo "set -r %project_name%"
+        exit 1
+    fi
+fi
+
+
+if [[ ! -d .git ]]; then
+    git init
 fi
 
 git submodule add https://github.com/zhdanov/hakunamatata
@@ -110,3 +123,60 @@ EOF
 
 fi
 # -j --jekyll end
+
+# -r --restfull-php begin
+if [ ! -z ${restfullphp+x} ]; then
+    cat << EOF >> ./.helm/templates/common.yaml
+{{- include "h-restfull-php" (list $ .) }}
+EOF
+
+    cat << EOF >> ./.helm/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config-files
+data:
+
+{{- include "h-config-nginx-backend" (list $ .) | indent 2 }}
+EOF
+
+    mkdir -p build
+
+    cat << EOF >> build/build__post-start-container.bash
+#!/bin/bash
+pushd "\$(dirname "\$0")"
+    ./../hakunamatata/build/build__restfull-php-post-start-container.bash $restfullphp
+popd
+EOF
+
+    chmod +x build/build__post-start-container.bash
+
+    cat << EOF >> werf.yaml
+
+---
+{{ \$tpl := .Files.Get ".werf/common/restfull-php.yaml" }}
+{{ tpl \$tpl . }}
+
+---
+{{ \$tpl := .Files.Get ".werf/common/wait-http-200.yaml" }}
+{{ tpl \$tpl . }}
+EOF
+
+    cat << EOF > .helm/postdeploy.bash
+#!/bin/bash
+pushd "\$(dirname "\$0")"
+    ./../hakunamatata/container/container__make-alias.bash $restfullphp-dev php-fpm
+    ./../hakunamatata/container/container__copy-dotfiles.bash $restfullphp-dev php-fpm
+    ./../hakunamatata/container/container__copy-root-ssh-key.bash $restfullphp-dev php-fpm
+popd
+EOF
+
+    chmod +x .helm/postdeploy.bash
+
+    shopt -s dotglob nullglob
+    rm -rf /tmp/hm-infect && mkdir /tmp/hm-infect && mv * /tmp/hm-infect/
+    composer -vvv create-project --prefer-dist laravel/lumen .
+    mv /tmp/hm-infect/* . && rmdir /tmp/hm-infect
+
+fi
+# -j --restfull-php end

@@ -1,0 +1,57 @@
+image: h-restfull-php-nginx
+from: nginx:1.21.4-alpine
+
+---
+image: h-restfull-php-lumen
+from: php:8.1.0RC5-fpm-alpine3.14
+shell:
+  beforeInstall: |
+    apk add --no-cache libc-dev \
+                       autoconf \
+                       make \
+                       gcc \
+                       g++ \
+                       bash \
+                       vim \
+                       zip \
+                       openssl \
+                       openssl-dev \
+                       libzip-dev \
+                       jpeg-dev \
+                       libpng-dev \
+                       openssh \
+                       git \
+                       php8-dev \
+                       php8-mbstring \
+                       php8-dom \
+                       colordiff \
+                       npm \
+                       inotify-tools
+
+    # install php-extentions
+    docker-php-ext-configure gd --with-jpeg
+    docker-php-ext-install -j$(nproc) gd zip bcmath pcntl
+
+    # install php config
+    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
+    # ssh_config for gitlab
+    printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+
+  setup: |
+    # install composer
+    curl -sS https://getcomposer.org/installer | php
+    mv composer.phar /usr/local/bin/composer
+
+    # install npm packages
+    npm install -g commitizen cz-conventional-changelog cz-customizable
+
+    # configure commitizen
+    echo '{ "path": "cz-conventional-changelog" }' > /root/.czrc
+
+    # configure ssh
+    mkdir -p /root/.ssh
+    chmod 700 /root/.ssh
+    echo 'Host *' > /root/.ssh/config
+    echo '    StrictHostKeyChecking no' >> /root/.ssh/config
+    chmod 400 /root/.ssh/config

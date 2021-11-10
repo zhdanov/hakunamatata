@@ -1,0 +1,64 @@
+# werf/restfull-php.yaml
+#
+{{- define "h-restfull-php" }} {{- $ := index . 0 }} {{- with index . 1 }}
+
+
+{{- include "h-statefulset-header" (list $ .) }}
+      containers:
+      - name: nginx
+        {{ tuple (printf "h-restfull-php-nginx") . | werf_container_image }}
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        volumeMounts:
+          - name: config-volume
+            subPath: nginx.conf
+            mountPath: /etc/nginx/nginx.conf
+          - name: data-store
+            mountPath: /var/www
+            subPath: {{ .Chart.Name }}-www
+      - name: php-fpm
+        {{ tuple (printf "h-restfull-php-lumen") . | werf_container_image }}
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - "git clone --recurse-submodules git@gitlab-prod.gitlab-prod:$HOME_USER_NAME/{{ .Chart.Name }}.git /root/{{ .Chart.Name }} && /root/{{ .Chart.Name }}/build/build__post-start-container.bash"
+        workingDir: /var/www/{{ .Chart.Name }}-backend
+        env:
+        - name: SSH_AUTH_SOCK
+          value: /ssh-agent
+        - name: ENVIRONMENT
+          value: {{ env "environment" }}
+        - name: HOME_USER_NAME
+          value: {{ env "HOME_USER_NAME" }}
+        ports:
+        - containerPort: 9000
+          name: http
+          protocol: TCP
+        volumeMounts:
+          - name: ssh-agent-sock
+            mountPath: /ssh-agent
+          - name: data-store
+            mountPath: /var/www
+            subPath: {{ .Chart.Name }}-www
+      initContainers:
+{{- $gitlabUrl := "http://gitlab-prod.gitlab-prod/users/sign_in" }}
+{{- include "h-init-container-wait-http-200" (list $ . $gitlabUrl) | indent 6 }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ .Chart.Name }}-config-files
+      - name: data-store
+        persistentVolumeClaim:
+          claimName: nfs-pvc-{{ .Chart.Name }}-{{ env "environment" }}
+      - name: ssh-agent-sock
+        hostPath:
+          path: /ssh-agent
+          type: Socket
+
+
+{{- end }} {{- end }}
