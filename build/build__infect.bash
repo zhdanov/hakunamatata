@@ -178,5 +178,29 @@ EOF
     composer -vvv create-project --prefer-dist laravel/lumen .
     mv /tmp/hm-infect/* . && rmdir /tmp/hm-infect
 
+    composer require "darkaonline/swagger-lume:8.*"
+
+    composer require 'zircote/swagger-php:3.*'
+
+    ./hakunamatata/text/text__replace-matched-line.php \
+    '// $app->withFacades();' \
+    '$app->withFacades();' \
+    bootstrap/app.php
+
+    ./hakunamatata/text/text__insert-line-after-match.php \
+    "\$app->configure('app');" \
+    "\$app->configure('swagger-lume');" \
+    bootstrap/app.php
+
+    ./hakunamatata/text/text__insert-line-after-match.php \
+    "\$app->register(App\Providers\EventServiceProvider::class);" \
+    "\$app->register(\SwaggerLume\ServiceProvider::class);" \
+    bootstrap/app.php
+
+    chmod -R 777 storage/api-docs
+
 fi
 # -j --restfull-php end
+
+git add .
+git commit -m 'build(hakunamatata): infect'
