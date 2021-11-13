@@ -17,6 +17,7 @@ then
             git pull origin master
             git submodule update --init --recursive
             composer install
+            chmod -R 777 storage
         popd
     fi
 

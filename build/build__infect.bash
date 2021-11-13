@@ -197,7 +197,7 @@ EOF
     "\$app->register(\SwaggerLume\ServiceProvider::class);" \
     bootstrap/app.php
 
-    chmod -R 777 storage/api-docs
+    chmod -R 777 storage
 
 fi
 # -j --restfull-php end
