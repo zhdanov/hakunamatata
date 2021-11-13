@@ -18,6 +18,8 @@ then
             git submodule update --init --recursive
             composer install
             chmod -R 777 storage
+            php artisan swagger-lume:publish
+            php artisan swagger-lume:generate
         popd
     fi
 

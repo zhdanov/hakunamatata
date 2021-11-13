@@ -197,6 +197,11 @@ EOF
     "\$app->register(\SwaggerLume\ServiceProvider::class);" \
     bootstrap/app.php
 
+    cat << EOF >> app/Http/Controllers/Controller.php
+/** @OA\Info(title="API", version="0.1") */
+/** @OA\Get(path="/",description="API",@OA\Response(response="default", description="Welcome page")) */
+EOF
+
     chmod -R 777 storage
 
 fi
