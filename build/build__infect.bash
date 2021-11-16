@@ -1,28 +1,16 @@
 #!/bin/bash
 
+PROJECT=`basename "$PWD"`
+EXT=''
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -j|--jekyll) jekyll="$2"; shift ;;
-        -r|--restfull-php) restfullphp="$2"; shift ;;
+        -j|--jekyll) EXT=jekyll; shift ;;
+        -r|--restfull-php) EXT=restfullphp; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
 done
-
-if [ ! -z ${jekyll+x} ]; then
-    if [ "$jekyll" == "" ]; then
-        echo "set -j %project_name%"
-        exit 1
-    fi
-fi
-
-if [ ! -z ${restfullphp+x} ]; then
-    if [ "$restfullphp" == "" ]; then
-        echo "set -r %project_name%"
-        exit 1
-    fi
-fi
-
 
 if [[ ! -d .git ]]; then
     git init
@@ -58,7 +46,7 @@ development
 EOF
 
 # -j --jekyll begin
-if [ ! -z ${jekyll+x} ]; then
+if [ $EXT == "jekyll" ]; then
     cat << EOF >> ./.helm/templates/common.yaml
 {{- include "h-jekyll" (list $ .) }}
 EOF
@@ -68,7 +56,7 @@ EOF
     cat << EOF >> build/build__post-start-container.bash
 #!/bin/bash
 pushd "\$(dirname "\$0")"
-    ./../hakunamatata/build/build__jekyll-post-start-container.bash $jekyll
+    ./../hakunamatata/build/build__jekyll-post-start-container.bash $PROJECT
 popd
 EOF
 
@@ -99,9 +87,9 @@ EOF
     cat << EOF > .helm/postdeploy.bash
 #!/bin/bash
 pushd "\$(dirname "\$0")"
-    ./../hakunamatata/container/container__make-alias.bash $jekyll-dev jekyll
-    ./../hakunamatata/container/container__copy-dotfiles.bash $jekyll-dev jekyll
-    ./../hakunamatata/container/container__copy-root-ssh-key.bash $jekyll-dev jekyll
+    ./../hakunamatata/container/container__make-alias.bash $PROJECT-dev jekyll
+    ./../hakunamatata/container/container__copy-dotfiles.bash $PROJECT-dev jekyll
+    ./../hakunamatata/container/container__copy-root-ssh-key.bash $PROJECT-dev jekyll
 popd
 EOF
 
@@ -125,7 +113,7 @@ fi
 # -j --jekyll end
 
 # -r --restfull-php begin
-if [ ! -z ${restfullphp+x} ]; then
+if [ $EXT == "restfullphp" ]; then
     cat << EOF >> ./.helm/templates/common.yaml
 {{- include "h-restfull-php" (list $ .) }}
 EOF
@@ -145,7 +133,7 @@ EOF
     cat << EOF >> build/build__post-start-container.bash
 #!/bin/bash
 pushd "\$(dirname "\$0")"
-    ./../hakunamatata/build/build__restfull-php-post-start-container.bash $restfullphp
+    ./../hakunamatata/build/build__restfull-php-post-start-container.bash $PROJECT
 popd
 EOF
 
@@ -165,9 +153,9 @@ EOF
     cat << EOF > .helm/postdeploy.bash
 #!/bin/bash
 pushd "\$(dirname "\$0")"
-    ./../hakunamatata/container/container__make-alias.bash $restfullphp-dev php-fpm
-    ./../hakunamatata/container/container__copy-dotfiles.bash $restfullphp-dev php-fpm
-    ./../hakunamatata/container/container__copy-root-ssh-key.bash $restfullphp-dev php-fpm
+    ./../hakunamatata/container/container__make-alias.bash $PROJECT-dev php-fpm
+    ./../hakunamatata/container/container__copy-dotfiles.bash $PROJECT-dev php-fpm
+    ./../hakunamatata/container/container__copy-root-ssh-key.bash $PROJECT-dev php-fpm
 popd
 EOF
 
