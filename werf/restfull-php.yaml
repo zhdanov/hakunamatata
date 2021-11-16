@@ -59,12 +59,12 @@ shell:
     chmod 400 /root/.ssh/config
 
     # configure fzf+ripgrep
-    cat << EOF >> $HOME/.bashrc
+    cat << EOF >> /root/.bashrc
       # fzf + rg￼
       export FZF_DEFAULT_COMMAND='rg --files --no-ignore -g "!{.git,node_modules,vendor,hakunamatata}/*" 2> /dev/null'
-      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+      export FZF_CTRL_T_COMMAND="\$FZF_DEFAULT_COMMAND"
       if [ -t 1 ]
       then
-        bind -x '"\C-p": fzf_path=$(fzf); vim $fzf_path; history -s vim $fzf_path'
+        bind -x '"\C-p": fzf_path=\$(fzf); vim \$fzf_path; history -s vim \$fzf_path'
       fi
     EOF
