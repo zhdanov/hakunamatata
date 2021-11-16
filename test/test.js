@@ -18,11 +18,11 @@ const $ = jQuery = require('jquery')(window);
 
 global.window = window;
 
-const hmin = __dirname + '/../h.min.js';
+const hmin = __dirname + '/../h-with-tests.min.js';
 
 if (!fs.existsSync(hmin)) {
   console.log('building ' + hmin);
-  exec.execSync('npm run build:js');
+  exec.execSync('npm run build:js; mv ' + __dirname + '/../h.min.js' + ' ' + hmin, {env: { ...process.env, H_ENV_TEST: 1 }});
 }
 
 eval(fs.readFileSync(hmin).toString().substring(13));
