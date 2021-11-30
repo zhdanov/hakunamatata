@@ -27,6 +27,13 @@ fi
 
 echo "0.0.0.0  $PROJECT-dev.loc" >> /etc/hosts
 
+if [[ -f /var/www/$PROJECT/Gemfile.lock ]]; then
+    pushd /var/www/$PROJECT/
+        rm Gemfile.lock
+        bundle install
+    popd
+fi
+
 if [[ -f /var/www/$PROJECT/Gemfile ]]; then
 
     pushd /var/www/$PROJECT/
