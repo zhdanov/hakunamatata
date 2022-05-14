@@ -7,7 +7,7 @@
 
 
 - name: wait-http-200-{{ print $url | sha256sum | trunc 5 }}
-  {{ tuple (printf "h-wait-http-200") . | werf_container_image }}
+  image: {{ .Values.werf.image.h_wait_http_200 }}
   command:
     - "sh"
     - "-c"

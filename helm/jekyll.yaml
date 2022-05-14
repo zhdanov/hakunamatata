@@ -6,7 +6,7 @@
 {{- include "h-statefulset-header" (list $ .) }}
       containers:
       - name: jekyll
-        {{ tuple (printf "jekyll") . | werf_container_image }}
+        image: {{ .Values.werf.image.jekyll }}
         lifecycle:
           postStart:
             exec:
@@ -19,9 +19,9 @@
         - name: SSH_AUTH_SOCK
           value: /ssh-agent
         - name: ENVIRONMENT
-          value: {{ env "environment" }}
+          value: {{ .Values.werf.env }}
         - name: HOME_USER_NAME
-          value: {{ env "HOME_USER_NAME" }}
+          value: {{ .Values.HOME_USER_NAME }}
         ports:
         - containerPort: 80
           name: jekyll
@@ -41,7 +41,7 @@
           name: {{ .Chart.Name }}-config-files
       - name: data-store
         persistentVolumeClaim:
-          claimName: nfs-pvc-{{ .Chart.Name }}-{{ env "environment" }}
+          claimName: nfs-pvc-{{ .Chart.Name }}-{{ .Values.werf.env }}
       - name: ssh-agent-sock
         hostPath:
           path: /ssh-agent

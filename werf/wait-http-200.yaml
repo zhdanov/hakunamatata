@@ -1,6 +1,6 @@
 # helm/init-container-wait-http-200.yaml
 #
-image: h-wait-http-200
+image: h_wait_http_200
 from: alpine:3.13.0
 shell:
   beforeInstall:

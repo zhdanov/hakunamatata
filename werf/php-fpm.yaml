@@ -1,4 +1,4 @@
-image: h-php-fpm
+image: h_php_fpm
 from: php:7.4.14-fpm-alpine3.13
 shell:
   beforeInstall: |

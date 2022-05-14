@@ -6,7 +6,7 @@
 {{- include "h-statefulset-header" (list $ .) }}
       containers:
       - name: nginx
-        {{ tuple (printf "h-restfull-php-nginx") . | werf_container_image }}
+        image: {{ .Values.werf.image.h_restfull_php_nginx }}
         ports:
         - containerPort: 80
           name: http
@@ -19,7 +19,7 @@
             mountPath: /var/www
             subPath: {{ .Chart.Name }}-www
       - name: php-fpm
-        {{ tuple (printf "h-restfull-php-lumen") . | werf_container_image }}
+        image: {{ .Values.werf.image.h_restfull_php_lumen }}
         lifecycle:
           postStart:
             exec:
@@ -32,9 +32,9 @@
         - name: SSH_AUTH_SOCK
           value: /ssh-agent
         - name: ENVIRONMENT
-          value: {{ env "environment" }}
+          value: {{ .Values.werf.env }}
         - name: HOME_USER_NAME
-          value: {{ env "HOME_USER_NAME" }}
+          value: {{ .Values.HOME_USER_NAME }}
         ports:
         - containerPort: 9000
           name: http
@@ -54,7 +54,7 @@
           name: {{ .Chart.Name }}-config-files
       - name: data-store
         persistentVolumeClaim:
-          claimName: nfs-pvc-{{ .Chart.Name }}-{{ env "environment" }}
+          claimName: nfs-pvc-{{ .Chart.Name }}-{{ .Values.werf.env }}
       - name: ssh-agent-sock
         hostPath:
           path: /ssh-agent

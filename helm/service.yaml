@@ -5,13 +5,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Chart.Name }}-{{ env "environment" }}
+  name: {{ .Chart.Name }}-{{ .Values.werf.env }}
   labels:
-    app: {{ .Chart.Name }}-{{ env "environment" }}
+    app: {{ .Chart.Name }}-{{ .Values.werf.env }}
 spec:
   clusterIP: None
   selector:
-    app: {{ .Chart.Name }}-{{ env "environment" }}
+    app: {{ .Chart.Name }}-{{ .Values.werf.env }}
   ports:
   - name: http
     port: 80

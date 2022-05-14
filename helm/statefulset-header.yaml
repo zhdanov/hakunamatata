@@ -5,17 +5,17 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Chart.Name }}-{{ env "environment" }}
+  name: {{ .Chart.Name }}-{{ .Values.werf.env }}
 spec:
-  serviceName: {{ .Chart.Name }}-{{ env "environment" }}
+  serviceName: {{ .Chart.Name }}-{{ .Values.werf.env }}
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}-{{ env "environment" }}
+      app: {{ .Chart.Name }}-{{ .Values.werf.env }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}-{{ env "environment" }}
+        app: {{ .Chart.Name }}-{{ .Values.werf.env }}
     spec:
 
 

@@ -41,7 +41,7 @@ nginx.conf: |
 
     server {
       listen 80;
-      server_name {{ .Chart.Name }}-{{ env "environment" }}.loc;
+      server_name {{ .Chart.Name }}-{{ .Values.werf.env }}.loc;
       client_max_body_size 200m;
       index index.html index.htm index.php;
       root /var/www/{{ .Chart.Name }}-backend/public;
