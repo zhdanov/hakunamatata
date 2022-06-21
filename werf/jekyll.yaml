@@ -1,18 +1,20 @@
 image: jekyll
-from: php:7.4.13-fpm-alpine3.12
+from: php:8.1.6-cli-alpine3.16
+docker:
+  USER: root
+  WORKDIR: /var/www
+  EXPOSE: "9000"
+  CMD: ["sleep", "infinity"]
 shell:
   beforeInstall: |
-    # install packages for php-fpm
-    apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev openssh git colordiff php7-dev npm inotify-tools
-
-    # install php-extentions
-    docker-php-ext-configure gd --with-jpeg
-    docker-php-ext-install -j$(nproc) gd zip
-
+    # install packages for php-cli
+    apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev \
+    openssh git colordiff npm inotify-tools
     # install php config
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
-
-    # jekyll
+    # ssh_config for gitlab
+    printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+    # install jekyll
     apk --no-cache add zlib-dev
     apk --no-cache add libffi-dev
     apk --no-cache add build-base
@@ -33,10 +35,8 @@ shell:
     apk --no-cache add readline
     apk --no-cache add libxslt
     apk --no-cache add libffi
-    apk --no-cache add nodejs
     apk --no-cache add tzdata
     apk --no-cache add shadow
-    apk --no-cache add nodejs-npm
     apk --no-cache add libressl
     apk --no-cache add yarn
     apk --no-cache add libatomic
@@ -55,7 +55,6 @@ shell:
     # ssh_config for gitlab
     printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
 
-  setup: |
     # jekyll
     echo 'source "https://rubygems.org"' > /root/Gemfile
     echo 'gem "jekyll", "~> 4.2"' >> /root/Gemfile
@@ -75,6 +74,7 @@ shell:
 
     cd /root && bundle install
 
+  setup: |
     # install npm packages
     npm install -g commitizen cz-conventional-changelog cz-customizable
 
