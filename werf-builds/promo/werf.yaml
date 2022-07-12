@@ -1,4 +1,8 @@
-image: jekyll
+project: hakunamatata
+configVersion: 1
+
+---
+image: promo
 from: php:8.1.6-cli-alpine3.16
 docker:
   USER: root

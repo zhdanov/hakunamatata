@@ -1,0 +1,9 @@
+project: hakunamatata
+configVersion: 1
+
+---
+image: wait_http_200
+from: alpine:3.13.0
+shell:
+  beforeInstall:
+  - apk add --no-cache curl
