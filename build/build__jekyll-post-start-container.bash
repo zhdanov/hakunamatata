@@ -2,6 +2,33 @@
 
 PROJECT=$1
 
+# fix write file error
+PATH_TO_FILE_HELPER=/usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/file_helper.rb
+sed -i '25,25{s/^/#/}' $PATH_TO_FILE_HELPER
+sed -i '32,32{s/^/#/}' $PATH_TO_FILE_HELPER
+
+# fix to_api error
+function fix_to_api_error() {
+  local NUM=${1}
+  local PATH_TO_FILE=${2}
+  sed -i "${NUM},${NUM}{s/^/#/}" $PATH_TO_FILE
+  sed -i "${NUM},${NUM}{s/^/\n \
+          if new? || renamed?\n \
+            sleep(1)\n \
+            path = {\"path\": write_path.split(\"\/\").slice(4, write_path.length()).join(\"\/\")}\n \
+            json path\n \
+          else\n \
+            json written_file.to_api(:include_content => true)\n \
+          end\n \
+  /}" $PATH_TO_FILE
+}
+fix_to_api_error 28 /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/pages.rb
+fix_to_api_error 37 /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/collections.rb
+
+# hide scroll in editor
+sed -i 's/display:none}.CodeMirror-vscrollbar/display:none !important}.CodeMirror-vscrollbar}/g' /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/public/static/css/main*chunk.css
+
+# first init
 if nc -z -w2 gitlab-prod.gitlab-prod 80 2>/dev/null
 then
 
@@ -25,8 +52,10 @@ then
 
 fi
 
+# host
 echo "0.0.0.0  $PROJECT-dev.loc" >> /etc/hosts
 
+# fix broken ruby
 if [[ -f /var/www/$PROJECT/Gemfile.lock ]]; then
     pushd /var/www/$PROJECT/
         rm Gemfile.lock
@@ -34,6 +63,7 @@ if [[ -f /var/www/$PROJECT/Gemfile.lock ]]; then
     popd
 fi
 
+# start jekyll
 if [[ -f /var/www/$PROJECT/Gemfile ]]; then
 
     pushd /var/www/$PROJECT/
