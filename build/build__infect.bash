@@ -16,7 +16,7 @@ if [[ ! -d .git ]]; then
     git init
 fi
 
-git submodule add https://github.com/zhdanov/hakunamatata
+git submodule add git@gitlab-prod.loc:zhdanov/hakunamatata.git
 
 cat << EOF > werf.yaml
 project: {{ env "appname" }}
@@ -24,6 +24,16 @@ configVersion: 1
 deploy:
   namespace: {{ env "appname" }}-{{ env "environment" }}
   namespaceSlug: false
+EOF
+
+cat << EOF > werf-giterminism.yaml
+giterminismConfigVersion: 1
+config:
+  goTemplateRendering:
+    allowEnvVariables:
+      - environment
+      - appname
+      - HOME_USER_NAME
 EOF
 
 mkdir -p .werf
@@ -42,11 +52,11 @@ cat << EOF > ./.helm/templates/common.yaml
 EOF
 
 cat << EOF > namespace-list.txt
-development
+dev
 EOF
 
 # -j --jekyll begin
-if [ $EXT == "jekyll" ]; then
+if [ "$EXT" == "jekyll" ]; then
     cat << EOF >> ./.helm/templates/common.yaml
 {{- include "h-jekyll" (list $ .) }}
 EOF
@@ -113,7 +123,7 @@ fi
 # -j --jekyll end
 
 # -r --restfull-php begin
-if [ $EXT == "restfullphp" ]; then
+if [ "$EXT" == "restfullphp" ]; then
     cat << EOF >> ./.helm/templates/common.yaml
 {{- include "h-restfull-php" (list $ .) }}
 EOF
