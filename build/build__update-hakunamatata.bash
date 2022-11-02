@@ -15,4 +15,4 @@ popd
 
 git add hakunamatata
 git ci -m 'build(hakunamatata) update'
-git push origin master
+git push origin $branch_name
