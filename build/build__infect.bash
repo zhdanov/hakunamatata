@@ -16,7 +16,7 @@ if [[ ! -d .git ]]; then
     git init
 fi
 
-git submodule add git@gitlab-prod.loc:zhdanov/hakunamatata.git
+git submodule add git@gitlab-prod.gitlab-prod:zhdanov/hakunamatata.git
 
 cat << EOF > werf.yaml
 project: {{ env "appname" }}
@@ -75,12 +75,12 @@ EOF
     cat << EOF >> werf.yaml
 
 ---
-{{ \$tpl := .Files.Get ".werf/common/jekyll.yaml" }}
-{{ tpl \$tpl . }}
+image: jekyll
+from: werf-registry.kube-system.svc.cluster.local/hakunamatata:promo_latest
 
 ---
-{{ \$tpl := .Files.Get ".werf/common/wait-http-200.yaml" }}
-{{ tpl \$tpl . }}
+image: h_wait_http_200
+from: werf-registry.kube-system.svc.cluster.local/hakunamatata:wait_http_200_latest
 EOF
 
     cat << EOF >> .gitignore
