@@ -5,7 +5,7 @@ EXT=''
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        -j|--jekyll) EXT=jekyll; shift ;;
+        -p|--promo) EXT=promo; shift ;;
         -r|--restfull-php) EXT=restfullphp; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
@@ -55,10 +55,10 @@ cat << EOF > namespace-list.txt
 dev
 EOF
 
-# -j --jekyll begin
-if [ "$EXT" == "jekyll" ]; then
+# -p --promo begin
+if [ "$EXT" == "promo" ]; then
     cat << EOF >> ./.helm/templates/common.yaml
-{{- include "h-jekyll" (list $ .) }}
+{{- include "h-promo" (list $ .) }}
 EOF
 
     mkdir -p build
@@ -75,7 +75,7 @@ EOF
     cat << EOF >> werf.yaml
 
 ---
-image: jekyll
+image: promo
 from: werf-registry.kube-system.svc.cluster.local/hakunamatata:promo_latest
 
 ---
@@ -97,9 +97,9 @@ EOF
     cat << EOF > .helm/postdeploy.bash
 #!/bin/bash
 pushd "\$(dirname "\$0")"
-    ./../hakunamatata/container/container__make-alias.bash $PROJECT-dev jekyll
-    ./../hakunamatata/container/container__copy-dotfiles.bash $PROJECT-dev jekyll
-    ./../hakunamatata/container/container__copy-root-ssh-key.bash $PROJECT-dev jekyll
+    ./../hakunamatata/container/container__make-alias.bash $PROJECT-dev promo
+    ./../hakunamatata/container/container__copy-dotfiles.bash $PROJECT-dev promo
+    ./../hakunamatata/container/container__copy-root-ssh-key.bash $PROJECT-dev promo
 popd
 EOF
 
@@ -120,7 +120,7 @@ EOF
     chmod +x build/build__commit.bash
 
 fi
-# -j --jekyll end
+# -p --promo end
 
 # -r --restfull-php begin
 if [ "$EXT" == "restfullphp" ]; then

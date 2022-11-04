@@ -1,19 +1,19 @@
-# werf/jekyll.yaml
+# werf/promo.yaml
 #
-{{- define "h-jekyll" }} {{- $ := index . 0 }} {{- with index . 1 }}
+{{- define "h-promo" }} {{- $ := index . 0 }} {{- with index . 1 }}
 
 
 {{- include "h-statefulset-header" (list $ .) }}
       containers:
-      - name: jekyll
-        image: {{ .Values.werf.image.jekyll }}
+      - name: promo
+        image: {{ .Values.werf.image.promo }}
         lifecycle:
           postStart:
             exec:
               command:
                 - "sh"
                 - "-c"
-                - "git clone --recurse-submodules git@gitlab-prod.gitlab-prod:$HOME_USER_NAME/{{ .Chart.Name }}.git /root/{{ .Chart.Name }} && /root/{{ .Chart.Name }}/build/build__post-start-container.bash"
+                - "/root/{{ .Chart.Name }}/build/build__post-start-container.bash"
         workingDir: /var/www/{{ .Chart.Name }}
         env:
         - name: SSH_AUTH_SOCK
@@ -24,7 +24,7 @@
           value: {{ .Values.HOME_USER_NAME }}
         ports:
         - containerPort: 80
-          name: jekyll
+          name: promo
           protocol: TCP
         volumeMounts:
           - name: ssh-agent-sock
