@@ -12,7 +12,7 @@ docker:
 shell:
   beforeInstall: |
     # install packages for php-cli
-    apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev \
+    apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev ripgrep fzf \
     openssh git colordiff npm inotify-tools
     # install php config
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini

@@ -28,6 +28,26 @@ fix_to_api_error 37 /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/se
 # hide scroll in editor
 sed -i 's/display:none}.CodeMirror-vscrollbar/display:none !important}.CodeMirror-vscrollbar}/g' /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/public/static/css/main*chunk.css
 
+# .bashrc
+echo "
+# fzf + rg￼
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore -g \"!{.git,node_modules,vendor}/*\" 2> /dev/null'
+export FZF_CTRL_T_COMMAND=\"\$FZF_DEFAULT_COMMAND\"
+if [ -t 1 ]
+then
+  bind -x '\"\C-p\": fzf_path=\$(fzf); vim \$fzf_path; history -s vim \$fzf_path'
+fi" >> /root/.bashrc
+
+# neovim
+mkdir -p /opt/neovim
+pushd /opt/neovim
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    chmod u+x nvim.appimage
+    ./nvim.appimage --appimage-extract
+    ./squashfs-root/AppRun --version
+    ln -s /opt/neovim/squashfs-root/AppRun /usr/local/bin/v
+popd
+
 # first init
 if nc -z -w2 gitlab-prod.gitlab-prod 80 2>/dev/null
 then
@@ -49,7 +69,6 @@ then
             bundle install
         popd
     fi
-
 fi
 
 # host
@@ -69,5 +88,4 @@ if [[ -f /var/www/$PROJECT/Gemfile ]]; then
     pushd /var/www/$PROJECT/
         jekyll serve -w -I > /dev/null 2>&1 &
     popd
-
 fi
