@@ -38,16 +38,6 @@ then
   bind -x '\"\C-p\": fzf_path=\$(fzf); vim \$fzf_path; history -s vim \$fzf_path'
 fi" >> /root/.bashrc
 
-# neovim
-mkdir -p /opt/neovim
-pushd /opt/neovim
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-    chmod u+x nvim.appimage
-    ./nvim.appimage --appimage-extract
-    ./squashfs-root/AppRun --version
-    ln -s /opt/neovim/squashfs-root/AppRun /usr/local/bin/v
-popd
-
 # first init
 if nc -z -w2 gitlab-prod.gitlab-prod 80 2>/dev/null
 then
