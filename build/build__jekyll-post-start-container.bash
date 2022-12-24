@@ -3,7 +3,7 @@
 PROJECT=$1
 
 # fix write file error
-PATH_TO_FILE_HELPER=/usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/file_helper.rb
+PATH_TO_FILE_HELPER=/var/lib/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/file_helper.rb
 sed -i '25,25{s/^/#/}' $PATH_TO_FILE_HELPER
 sed -i '32,32{s/^/#/}' $PATH_TO_FILE_HELPER
 
@@ -22,11 +22,11 @@ function fix_to_api_error() {
           end\n \
   /}" $PATH_TO_FILE
 }
-fix_to_api_error 28 /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/pages.rb
-fix_to_api_error 37 /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/collections.rb
+fix_to_api_error 28 /var/lib/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/pages.rb
+fix_to_api_error 37 /var/lib/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/server/collections.rb
 
 # hide scroll in editor
-sed -i 's/display:none}.CodeMirror-vscrollbar/display:none !important}.CodeMirror-vscrollbar}/g' /usr/lib/ruby/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/public/static/css/main*chunk.css
+sed -i 's/display:none}.CodeMirror-vscrollbar/display:none !important}.CodeMirror-vscrollbar}/g' /var/lib/gems/*/gems/jekyll-admin-*/lib/jekyll-admin/public/static/css/main*chunk.css
 
 # .bashrc
 echo "

@@ -12,7 +12,7 @@ docker:
 shell:
   beforeInstall: |
     # install packages for php-cli
-    apt-get update -y && apt-get -y install vim zip libzip-dev libpng-dev libjpeg-dev ripgrep fzf \
+    apt-get update -y && apt-get -y install locales-all vim  zip libzip-dev libpng-dev libjpeg-dev ripgrep fzf \
     openssh-server git colordiff npm inotify-tools
 
     # install php config
@@ -41,6 +41,11 @@ shell:
     cd /root && bundle install
 
   setup: |
+    # configure locale
+    echo 'export LC_ALL=ru_RU.UTF-8' >> /root/.bashrc
+    echo 'export LANG=ru_RU.UTF-8' >> /root/.bashrc
+    echo 'export LANGUAGE=ru_RU.UTF-8' >> /root/.bashrc
+
     # install npm packages
     npm install -g commitizen cz-conventional-changelog cz-customizable
 
