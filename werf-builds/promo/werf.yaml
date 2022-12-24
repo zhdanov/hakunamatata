@@ -3,7 +3,7 @@ configVersion: 1
 
 ---
 image: promo
-from: php:8.1.6-cli-alpine3.16
+from: php:8.2.0-cli-bullseye
 docker:
   USER: root
   WORKDIR: /var/www
@@ -12,54 +12,17 @@ docker:
 shell:
   beforeInstall: |
     # install packages for php-cli
-    apk add --no-cache libc-dev autoconf make gcc g++ bash vim zip libzip-dev libpng-dev jpeg-dev ripgrep fzf \
-    openssh git colordiff npm inotify-tools ncdu
+    apt-get update -y && apt-get -y install vim zip libzip-dev libpng-dev libjpeg-dev ripgrep fzf \
+    openssh-server git colordiff npm inotify-tools
+
     # install php config
     cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+
     # ssh_config for gitlab
     printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+
     # install jekyll
-    apk --no-cache add zlib-dev
-    apk --no-cache add libffi-dev
-    apk --no-cache add build-base
-    apk --no-cache add libxml2-dev
-    apk --no-cache add imagemagick-dev
-    apk --no-cache add readline-dev
-    apk --no-cache add libxslt-dev
-    apk --no-cache add yaml-dev
-    apk --no-cache add vips-dev
-    apk --no-cache add sqlite-dev
-    apk --no-cache add cmake
-    apk --no-cache add curl-dev
-    apk --no-cache add linux-headers
-    apk --no-cache add openjdk8-jre
-    apk --no-cache add less
-    apk --no-cache add zlib
-    apk --no-cache add libxml2
-    apk --no-cache add readline
-    apk --no-cache add libxslt
-    apk --no-cache add libffi
-    apk --no-cache add tzdata
-    apk --no-cache add shadow
-    apk --no-cache add libressl
-    apk --no-cache add yarn
-    apk --no-cache add libatomic
-    apk --no-cache add ncurses-terminfo-base
-    apk --no-cache add ncurses-terminfo
-    apk --no-cache add ruby
-    apk --no-cache add ruby-dev
-    apk --no-cache add yaml
-    apk --no-cache add ruby-io-console
-    apk --no-cache add ruby-bundler
-    apk --no-cache add ruby-irb
-    apk --no-cache add ruby-json
-    apk --no-cache add ruby-rake
-    apk --no-cache add ruby-bigdecimal
-
-    # ssh_config for gitlab
-    printf "Host gitlab-prod.gitlab-prod\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
-
-    # jekyll
+    apt-get -y install ruby ruby-dev ruby-bundler ruby-json
     echo 'source "https://rubygems.org"' > /root/Gemfile
     echo 'gem "jekyll", "~> 4.2"' >> /root/Gemfile
     echo 'gem "webrick", "~> 1.7"' >> /root/Gemfile
@@ -75,7 +38,6 @@ shell:
     echo 'gem "unicode_utils"' >> /root/Gemfile
     echo 'gem "jekyll-seo-tag", "~> 2.0"' >> /root/Gemfile
     echo 'gem "rake", ">= 12.3.1", "< 13.1.0"' >> /root/Gemfile
-
     cd /root && bundle install
 
   setup: |
