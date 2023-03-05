@@ -1,2 +1,2 @@
 image: mariadb
-from: mariadb:10.5.8-focal
+from: mariadb:10.7.8-focal
