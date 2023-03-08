@@ -5,7 +5,7 @@ This project is a common library for my projects. Includes:
 - [Werf](https://werf.io/) and [helm](https://helm.sh/) templates
 - [Bash](https://www.gnu.org/software/bash/) scripts
 
-Last stable version: [1.1.0](https://github.com/zhdanov/hakunamatata/releases/tag/1.0.0)
+Last stable version: [1.2.0](https://github.com/zhdanov/hakunamatata/releases/tag/1.2.0)
 
 ## Installation
 ```bash
