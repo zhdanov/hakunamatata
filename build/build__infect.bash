@@ -77,6 +77,9 @@ EOF
 ---
 image: promo
 from: werf-registry.kube-system.svc.cluster.local/hakunamatata:promo_latest
+git:
+- add: /
+  to: /root/{{ env "appname" }}
 
 ---
 image: h_wait_http_200
